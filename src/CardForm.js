@@ -8,7 +8,7 @@ export default class CardForm extends React.Component {
     correct: 0,
     wrong: 0,
     showBack: false
-  }
+  };
   handleSubmit = e => {
     e.preventDefault()
     this.props.addCard(this.state)
@@ -51,6 +51,6 @@ export default class CardForm extends React.Component {
         </Form.Group>
         <Form.Button>Submit</Form.Button>
       </Form>
-    );
+      );
+    }
   }
-}

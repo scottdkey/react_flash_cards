@@ -14,7 +14,8 @@ class App extends Component {
         back: "important answer",
         correct: 0,
         wrong: 0,
-        showBack: false
+        showBack: false,
+        edit: false
       },
       {
         id: 2,
@@ -22,7 +23,8 @@ class App extends Component {
         back: "other answer",
         correct: 0,
         wrong: 0,
-        showBack: false
+        showBack: false,
+        edit: false
       }
     ],
     showForm: false
@@ -32,45 +34,84 @@ class App extends Component {
     return Math.floor(Math.random() * 100);
   }
   addCard = card => {
-    const newCard = {...card, id: this.getID() };
+    const newCard = { ...card, id: this.getID() };
     const newCards = [newCard, ...this.state.cards];
     this.setState({
       cards: newCards
-    })
+    });
   };
   deleteCard = id => {
     const { cards } = this.state;
-    const newCards = cards.filter(card => card.id !== id)
+    const newCards = cards.filter(card => card.id !== id);
     this.setState({
       cards: newCards
-    })
+    });
   };
-  editCard = () => {};
-  
-  toggleAnswer = id =>  {
-    // map and if id matches change 
-   let newArray = this.state.cards.map(card => {
-      if (card.id === id){
-        const newCard = {...card };
-        newCard.showBack = !card.showBack
-        return newCard;
+
+  editCard = cardObject => {
+    const { cards } = this.state;
+    const newCards = cards.map(card => {
+      if (card.id === cards.id) return card;
+      return card;
+    });
+    this.setState({ cards: cards });
+  };
+  renderEditForm() {
+    if (this.state.edit) {
+      return (
+      <form onSubmit={this.onUpdateHandle.bind(this)}>
+        <input 
+        type="text" 
+        name="updatedItem" 
+        className="item" 
+        defaultValue={this.state.title} />
+        <button className="update-add-item">Update</button>
+      </form>
+      )}
+    }
+  toggleEdit = id => {
+    const newArray = this.state.cards.map(card => {
+      if (card.id === id) {
+        const newCard = { ...card };
+        newCard.edit = !card.Edit;
+        this.toggleForm()
+
+        
       } else {
         return card
       }
-    })
+    });
+    
     this.setState({
-      cards : newArray
+      cards: newArray
     })
-  }
+    
+  };
+
+  toggleAnswer = id => {
+    // map and if id matches change
+    let newArray = this.state.cards.map(card => {
+      if (card.id === id) {
+        const Card = { ...card };
+        Card.showBack = !card.showBack;
+        return Card;
+      } else {
+        return card;
+      }
+    });
+    this.setState({
+      cards: newArray
+    });
+  };
   toggleForm = () => {
     this.setState({
       showForm: !this.state.showForm
     });
-  }
+  };
 
   render() {
     const { showForm } = this.state;
-     return (
+    return (
       <>
         <Container>
           <Header as="h1">Flash Cards</Header>
@@ -84,7 +125,8 @@ class App extends Component {
           <FlashCards
             cards={this.state.cards}
             delete={this.deleteCard}
-            edit={this.editCard}
+            // edit={this.editCard}
+            toggleEdit={this.toggleEdit}
             toggleAnswer={this.toggleAnswer}
           />
 
