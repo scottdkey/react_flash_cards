@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Header } from "semantic-ui-react";
+import { Container, Header, CommentAction } from "semantic-ui-react";
 import FlashCards from './flashCards'
 
 import "./App.css";
@@ -31,8 +31,20 @@ class App extends Component {
   getID() {
     return Math.floor(Math.random() * 100);
   }
-  addCard = () => {};
-  deleteCard = () => {};
+  addCard = card => {
+    const newCard = {...card, id: this.getID() };
+    const newCards = [newCard, ...this.state.cards];
+    this.setState({
+      cards: newCards
+    })
+  };
+  deleteCard = id => {
+    const { cards } = this.state;
+    const newCards = cards.filter(card => card.id !== id)
+    this.setState({
+      cards: newCards
+    })
+  };
   editCard = () => {};
   
   toggleAnswer = id =>  {
@@ -67,7 +79,7 @@ class App extends Component {
           <div onClick={this.toggleForm}>
             {showForm ? "hide" : "new Flashcard"}
           </div>
-          {/* {showForm ? <CardForm addCard={this.addCard} /> : null} */}
+          {showForm ? <CardForm addCard={this.addCard} /> : null}
           {/* bunch of flash cards */}
           <FlashCards
             cards={this.state.cards}

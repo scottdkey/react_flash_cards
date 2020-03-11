@@ -7,7 +7,7 @@ const FlashCards = props => (
   <>
     {props.cards.map(card => (
       <FlashCard
-        delete={props.delete}
+        deleteCard={props.delete}
         edit={props.edit}
         key={`card-id ${card.id}`}
         toggleAnswer={props.toggleAnswer}

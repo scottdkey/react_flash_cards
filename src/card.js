@@ -1,17 +1,30 @@
 import React from "react";
 import { Button, Card, Icon, Image } from "semantic-ui-react"
 
-const FlashCard = ({ front, back, id, edit, showBack, wrong, correct, toggleAnswer }) => (
+const FlashCard = ({
+  deleteCard,
+  front,
+  back,
+  id,
+  edit,
+  showBack,
+  wrong,
+  correct,
+  toggleAnswer,
+  
+}) => (
   <>
     <Card>
-      <Card.Content>
+      <Card.Content onClick={() => toggleAnswer(id)}>
         <Card.Header>{front}</Card.Header>
         <Card.Meta>Number of Times Correct:{correct}</Card.Meta>
         <Card.Meta>Number of Times Incorrect:{wrong}</Card.Meta>
-        {showBack ? <Card.Description>{back}</Card.Description> : null }
+        {showBack ? <Card.Description>{back}</Card.Description> : null}
       </Card.Content>
       <Card.Content extra>
-        <Button color="purple" onClick={() => toggleAnswer(id)}>Show Answer</Button>
+        <Button color="purple" onClick={() => toggleAnswer(id)}>
+          Show Answer
+        </Button>
         {/* {console.log(toggleAnswer)} */}
         {/* {console.log(id)} */}
       </Card.Content>
@@ -20,7 +33,9 @@ const FlashCard = ({ front, back, id, edit, showBack, wrong, correct, toggleAnsw
         <Button color="red">Incorrect</Button>
       </Card.Content>
       <Card.Content extra>
-        <Button color="teal">delete</Button>
+        <Button color="red" onClick={() => deleteCard(id)}>
+          delete
+        </Button>
         <Button color="blue">edit</Button>
       </Card.Content>
     </Card>
